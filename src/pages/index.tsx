@@ -4,12 +4,12 @@ import { Nunito } from "next/font/google";
 const nunito = Nunito({ subsets: ["latin"] });
 
 export default function Home() {
-  const truncateAddress = (address: string) => {
+  const truncateAddress = (address: string, characters: number) => {
     if (!address || address.length <= 16) {
       return address;
     }
-    const start = address.slice(0, 8);
-    const end = address.slice(-8);
+    const start = address.slice(0, characters);
+    const end = address.slice(-characters);
     return `${start}...${end}`;
   };
 
@@ -27,8 +27,8 @@ export default function Home() {
           pending blobs: <span className="text-white">{30}</span>
         </p>
       </section>
-      <section className="flex gap-4 w-full mb-10">
-        <div className="bg-[#171031] rounded-md overflow-hidden h-[512px] w-1/2 py-4 pl-4">
+      <section className="flex sm:gap-4 w-full mb-10">
+        <div className="bg-[#171031] rounded-md overflow-hidden h-[512px] w-full sm:w-1/2 py-4 pl-4">
           <h2 className="text-lg font-semibold">Bids</h2>
           <div className="overflow-y-scroll pr-4 my-3 h-full">
             {[...Array(7)].map((_, index) => (
@@ -42,7 +42,8 @@ export default function Home() {
                 </p>
                 <p>
                   {truncateAddress(
-                    "0x696d8d3bda41797e13578e85b8954c9bc82c401a"
+                    "0x696d8d3bda41797e13578e85b8954c9bc82c401a",
+                    4
                   )}
                 </p>
                 <p>{} wei</p>
@@ -66,7 +67,8 @@ export default function Home() {
                 </p>
                 <p>
                   {truncateAddress(
-                    "0x696d8d3bda41797e13578e85b8954c9bc82c401a"
+                    "0x696d8d3bda41797e13578e85b8954c9bc82c401a",
+                    4
                   )}
                 </p>
                 <p>{} wei</p>
@@ -74,7 +76,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <div className="bg-[#171031] rounded-md h-[512px] w-1/2 p-4">
+        <div className="hidden sm:block bg-[#171031] rounded-md h-[512px] w-1/2 p-4">
           <h2 className="text-lg font-semibold">Value over Time</h2>
         </div>
       </section>
@@ -82,7 +84,7 @@ export default function Home() {
         <h2 className="text-lg font-semibold">Latest Blobs</h2>
         <div className="flex justify-between text-[#b7acdf] text-base p-4 my-2">
           <p>Hash</p>
-          <p>Blobs Filled</p>
+          <p className="hidden sm:block">Blobs Filled</p>
           <p>Fee</p>
         </div>
         {[...Array(5)].map((_, index) => (
@@ -91,18 +93,18 @@ export default function Home() {
             className="flex justify-between bg-[#171031] rounded-md p-4 mb-4"
           >
             <p>
-              {truncateAddress("0x696d8d3bda41797e13578e85b8954c9bc82c401a")}
+              {truncateAddress("0x696d8d3bda41797e13578e85b8954c9bc82c401a", 8)}
             </p>
-            <div className="flex items-center gap-2">
+            <div className="hidden sm:flex items-center gap-2">
               <div className="relative bg-[#374151] rounded-md w-40 h-[10px]">
                 <span
                   className="absolute bg-[#10b981] rounded-md z-10 h-[10px]"
                   style={{ width: `${percentage}%` }}
                 ></span>
               </div>
-              <span className="text-[#22c55e] text-sm">{percentage}%</span>
+              <div className="text-[#22c55e] text-sm">{percentage}%</div>
             </div>
-            <p>{} wei</p>
+            <p>{12345} wei</p>
           </div>
         ))}
       </section>
